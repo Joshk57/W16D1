@@ -124,6 +124,16 @@ function pow(base, exponent) {
 //     3-dimensional array: [[['some data']]]
 function flatten(data) {
 
+    if (!Array.isArray(data)) return [data]
+
+    let arr = []
+
+    data.forEach(ele => {
+        let flattened = flatten(ele)
+        arr.push(...flattened)
+
+    })
+    return arr
 }
 
 // Write a function, fileFinder(directories, targetFile), that accepts an object representing directories and a string respresenting a filename.
@@ -166,7 +176,12 @@ function flatten(data) {
 // fileFinder(desktop, 'everlong.flac');            // => true
 // fileFinder(desktop, 'sequoia.jpeg');             // => false
 function fileFinder(directories, targetFile) {
-
+    for ( let key in directories) {
+        if (key === targetFile ||fileFinder(directories[key], targetFile)) {
+            return true
+        }
+    }
+    return false
 }
 
 
